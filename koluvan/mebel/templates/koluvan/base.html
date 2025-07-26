@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="{{ title }}"/>
+  <meta property="og:url" content="{{ url }}"/>
+  <meta property="og:description" content="{{ description }}"/>
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-main.jpeg' %}">
+  <meta property="og:locale" content="ru_RU"/>
+  <title>{% if meta.title %}{{ meta.title }}{% else %}Мебель на заказ в Мариуполе{% endif %}</title>
+  <meta name="description"
+    content="{% if meta.description %}{{ meta.description }}{% else %}Мебель в Мариуполе{% endif %}">
+  <meta name="keywords"
+    content="{{ meta.keywords }}">
+
+    <!-- Для .ico -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <!-- Для .svg (лучшее качество) -->
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+
+  <!-- Для Apple устройств -->
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+
+  <!-- Основные стили -->
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/media.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css">
+
+  <!-- Основные скрипты -->
+  <script src="{% static 'js/main.js' %}" defer></script>
+  <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+{#  <script src="{% static 'js/gallery.js' %}"></script>#}
+
+  <!-- Дополнительные блоки -->
+  {% block extra_styles %}{% endblock %}
+  {% block extra_scripts %}{% endblock %}
+</head>
+<body class="body">
+
+  <header class="header">
+    <!-- Бургер меню-->
+    <div class="burger">
+
+      <button class="burger__button" id="burgerButton">
+        <span class="burger__line burger__line-1"></span>
+        <span class="burger__line burger__line-2"></span>
+        <span class="burger__line burger__line-3"></span>
+      </button>
+
+      <a class="burger__logo" href="{% url 'mebel:main' %}" aria-label="На главную">
+        <img class="header__logo-img" src="{% static 'img/logo.svg' %}" alt="Логотип компании">
+      </a>
+    </div>
+
+    <!-- Главное меню -->
+    <div class="container flex header__menu">
+      <a class="header__logo" href="{% url 'mebel:main' %}" aria-label="На главную"><img class="header__logo-img" src="{% static 'img/logo.svg'|urlencode %}" alt="Логотип компании"></a>
+      <nav class="nav" aria-label="Основное меню">
+        {% if categories %}
+          <ul class="list-reset nav__list flex">
+            {% for category in categories %}
+              <li class="nav__item">
+                <a class="nav__link" href="{% url 'mebel:category_detail' slug=category.slug %}">
+                  <span class="nav__link-inner" data-text="{{ category.name }}">
+                    {{ category.name }}
+                  </span>
+                </a>
+              </li>
+            {% endfor %}
+          <li class="nav__item">
+                <a class="nav__link" href="{% url 'review:review' %}">
+                  <span class="nav__link-inner" data-text="Отзывы">
+                    Отзывы
+                  </span>
+                </a>
+              </li>
+          </ul>
+        {% endif %}
+      </nav>
+      <div class="header__icons">
+        <a class="header__icon tel__text" href="tel:+79999999999" aria-label="Позвонить" itemprop="telephone">
+          +7 (999) 999-99-99
+        </a>
+        <a class="header__icon tel__icon" target="_blank" href="tel:+79999999999" aria-label="Позвонить" itemprop="telephone">
+          <img class="img__tel" src="{% static 'img/call.svg'|urlencode %}" alt="Иконка телефонной трубки">
+        </a>
+        <a class="header__icon" target="_blank" href="https://t.me/username" aria-label="Telegram">
+          <img src="{% static 'img/telegram.png'|urlencode %}" alt="Иконка месенджера телеграм">
+        </a>
+      </div>
+    </div>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="mobile-nav">
+
+        {% if categories %}
+          <ul class="list-reset mobile-nav__list">
+            {% for category in categories %}
+              <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="{% url 'mebel:category_detail' slug=category.slug %}">
+                  <span class="mobile-nav__link-inner" data-text="{{ category.name }}">
+                    {{ category.name }}
+                  </span>
+                </a>
+              </li>
+            {% endfor %}
+            <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="{% url 'review:review' %}">
+                  <span class="mobile-nav__link-inner" data-text="Отзывы">
+                    Отзывы
+                  </span>
+                </a>
+              </li>
+          </ul>
+        {% endif %}
+      </nav>
+      <div class="mobile-contacts">
+        <a class="mobile-contacts__phone" href="tel:+79999999999" aria-label="Позвонить" itemprop="telephone">
+          +7 (999) 999-99-99
+        </a>
+        <div class="mobile-contacts__social">
+          <a class="mobile-contacts__icon" target="_blank" href="https://t.me/username" aria-label="Telegram">
+            <img src="{% static 'img/telegram.png'|urlencode %}" alt="Telegram">
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <!-- Логотип и контакты -->
+      <div class="footer__col footer__col--logo">
+        <a href="{% url 'mebel:main' %}" class="footer__logo" aria-label="На главную">
+          <img src="{% static 'img/logo.svg' %}" alt="Логотип компании" class="footer__logo-img">
+        </a>
+        <div class="footer__contacts">
+          <div class="footer__contact-item">
+            <img src="{% static 'img/call.svg' %}" alt="Телефон" class="footer__contact-icon">
+            <a href="tel:+79999999999" class="footer__contact-link">+7 (999) 999-99-99</a>
+          </div>
+          <div class="footer__contact-item">
+            <img src="{% static 'img/send-mail.png' %}" alt="Email" class="footer__contact-icon">
+            <a href="mailto:info@example.com" class="footer__contact-link">info@example.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <img src="{% static 'img/map-pin.png' %}" alt="Адрес" class="footer__contact-icon">
+            <span class="footer__contact-text">г. Мариуполь, ул. Примерная, 123</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Навигация -->
+      <div class="footer__col footer__col--nav">
+        <h3 class="footer__title">Навигация</h3>
+        <ul class="footer__nav list-reset">
+          {% for category in categories %}
+          <li class="footer__nav-item">
+            <a href="{% url 'mebel:category_detail' slug=category.slug %}" class="footer__nav-link">
+              <span class="footer__nav-link-inner">{{ category.name }}</span>
+            </a>
+          </li>
+          {% endfor %}
+          <li class="footer__nav-item">
+            <a href="{% url 'review:review' %}" class="footer__nav-link">
+              <span class="footer__nav-link-inner">Отзывы</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Соцсети -->
+      <div class="footer__col footer__col--social">
+        <h3 class="footer__title">Мы в соцсетях</h3>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link" target="_blank" aria-label="Telegram">
+            <img src="{% static 'img/telegram.png' %}" alt="Telegram" class="footer__social-icon">
+            <span>Telegram</span>
+          </a>
+          <a href="#" class="footer__social-link" target="_blank" aria-label="VK">
+            <img src="{% static 'img/vk.svg' %}" alt="VK" class="footer__social-icon">
+            <span>ВКонтакте</span>
+          </a>
+          <a href="#" class="footer__social-link" target="_blank" aria-label="WhatsApp">
+            <img src="{% static 'img/whatsapp.png' %}" alt="WhatsApp" class="footer__social-icon">
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Копирайт -->
+    <div class="footer__bottom">
+      <div class="footer__copyright">
+        &copy; {% now "Y" %} Мебель на заказ в Мариуполе. Все права защищены.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Подключение Inputmask -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+</body>
+</html>

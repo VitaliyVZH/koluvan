@@ -1,0 +1,83 @@
+### Python ###
+# Виртуальное окружение
+venv/
+.venv/
+env/
+ENV/
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Распределенные настройки (pip)
+*.egg-info/
+*.egg
+dist/
+build/
+pip-wheel-metadata/
+
+# Тестовые отчеты
+.pytest_cache/
+.coverage
+htmlcov/
+.nox/
+
+### Django ###
+# БД и медиа
+*.sqlite3
+*.db
+db.sqlite3
+/media/
+/staticfiles/
+
+# Локальные настройки
+.env
+.env.local
+.env*.local
+.env.dev
+.env.prod
+secrets.py
+
+### macOS ###
+# Системные файлы
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Файлы атрибутов
+**/.DS_Store
+**/._*
+
+### PyCharm ###
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea_modules/
+
+# Кэш PyCharm
+.idea/caches/
+.idea/shelf/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/.gitignore
+
+# Папки модулей
+.idea/modules.xml
+
+### VSCode (если используете) ###
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+### Jupyter Notebook ###
+.ipynb_checkpoints/
+
+### Миграции (если не храните в репозитории) ###
+# */migrations/*
+# !*/migrations/__init__.py

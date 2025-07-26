@@ -1,0 +1,275 @@
+{% extends 'koluvan/base.html' %}
+{% load static %}
+
+<!-- Дополнительные css стили -->
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+{% endblock %}
+
+<!-- Дополнительные js стили -->
+{% block extra_scripts %}
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+{% endblock %}
+
+{% block title%}Мебель на заказ в Мариуполе | Изготовление под любой бюджет{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="swiper hero__swiper">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide" role="group" aria-label="Слайд 1: Кухни">
+          <h2 id="slide1-title" class="hero__slide-h2">Кухни на заказ в Мариуполе | Изготовление под любой бюджет</h2>
+          <picture>
+            <img src="{% static 'img/kuhnya_main.jpg'|urlencode %}" alt="Кухня в современном стиле с фасадами из массива дуба" loading="eager" decoding="async">
+          </picture>
+        </div>
+
+        <div class="swiper-slide" role="group" aria-label="Слайд 2: Шкафы">
+          <h2 id="slide2-title" class="hero__slide-h2">Шкафы на заказ в Мариуполе | Все виды и конструкции</h2>
+          <picture>
+            <img src="{% static 'img/shkaf_main.jpg'|urlencode %}" alt="Фотография шкафа" loading="lazy" decoding="async">
+          </picture>
+        </div>
+
+        <div class="swiper-slide" role="group" aria-label="Слайд 3: Тумбочки">
+          <h2 id="slide3-title" class="hero__slide-h2">Тумбочки на заказ в Мариуполе | Для любой комнаты</h2>
+          <picture>
+            <img src="{% static 'img/tumba_main.jpg' %}" alt="Фотография тумбочки" loading="lazy" decoding="async">
+          </picture>
+        </div>
+
+        <div class="swiper-slide" role="group" aria-label="Слайд 4: Полки">
+          <h2 id="slide4-title" class="hero__slide-h2">Полки на заказ в Мариуполе | Функциональные решения</h2>
+          <picture>
+            <img src="{% static 'img/polka_main.jpg' %}" alt="Фотография полки" loading="lazy" decoding="async">
+          </picture>
+        </div>
+
+        <div class="swiper-slide" role="group" aria-label="Слайд 5: Мебель для бизнесса">
+          <h2 id="slide5-title" class="hero__slide-h2">Мебель для бизнеса в Мариуполе | Под ключ</h2>
+          <picture>
+            <img src="{% static 'img/buisness_main.jpg' %}" alt="Мебель для бизнеса на заказ" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Секция "О нас" -->
+<section class="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about__inner">
+      <div class="about__content">
+        <h2 id="about-heading" class="about__title">О нашей компании</h2>
+
+        <div class="about__text">
+          <p>Колыван и Ко - мастерская по изготовлению корпусной мебели в Мариуполе. Мы создаем уникальные решения для вашего дома и бизнеса, сочетая традиционное мастерство с современными технологиями.</p>
+
+          <p>Основанная в 2010 году, наша компания прошла путь от небольшой мастерской до признанного производителя мебели премиум-класса. За это время мы реализовали более 1500 проектов и заслужили доверие клиентов.</p>
+
+          <ul class="about__features">
+            <li class="about__feature">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Собственное производство полного цикла</span>
+            </li>
+            <li class="about__feature">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Используем только экологичные материалы</span>
+            </li>
+            <li class="about__feature">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Средний опыт наших мастеров - 8 лет</span>
+            </li>
+          </ul>
+
+          <div class="about__stats">
+            <div class="about__stat">
+              <div class="about__stat-number">12+</div>
+              <div class="about__stat-text">лет на рынке</div>
+            </div>
+            <div class="about__stat">
+              <div class="about__stat-number">1500+</div>
+              <div class="about__stat-text">реализованных проектов</div>
+            </div>
+            <div class="about__stat">
+              <div class="about__stat-number">98%</div>
+              <div class="about__stat-text">довольных клиентов</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Основной SEO-заголовок -->
+  <h1 class="visually-hidden">Мебель на заказ в Мариуполе | Изготовление корпусной мебели под любой бюджет</h1>
+
+  <!-- Секция с категориями на тематическом фоне -->
+  <section class="categories" aria-labelledby="categories-heading">
+    <div class="categories__bg"></div>
+
+    <div class="container">
+      <h2 id="categories-heading" class="categories__title section-title">Наша продукция</h2>
+
+      <div class="categories__grid">
+        {% for category in categories %}
+        <section class="category-card">
+          <div class="category-card__inner">
+            <div class="category-card__image-wrapper">
+              <img src="{{ category.main_image.url|urlencode }}"
+                   alt="{{ category.name }} от производителя"
+                   class="category-card__image"
+                   loading="lazy"
+                   width="400"
+                   height="300">
+            </div>
+
+            <div class="category-card__content">
+              <h3 class="category-card__title">{{ category.name }}</h3>
+              <a href="{% url 'mebel:category_detail' slug=category.slug %}" class="category-card__btn">
+                Подробнее
+                <svg class="category-card__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </section>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция обратной связи -->
+  <section class="contact-form" aria-labelledby="contact-heading">
+    <div class="contact-form__bg"></div>
+
+    <div class="container">
+      <div class="contact-form__wrapper">
+        <div class="contact-form__content">
+          <h2 id="contact-heading" class="contact-form__title">Закажите мебель своей мечты</h2>
+          <p class="contact-form__subtitle">Оставьте заявку и наш менеджер свяжется с вами в течение 15 минут</p>
+
+          <ul class="contact-form__benefits" role="list">
+            <li class="contact-form__benefit">
+              <svg class="contact-form__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Бесплатный замер и консультация</span>
+            </li>
+            <li class="contact-form__benefit">
+              <svg class="contact-form__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Расчет стоимости сразу после замера</span>
+            </li>
+            <li class="contact-form__benefit">
+              <svg class="contact-form__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 13l4 4L19 7" stroke="#c8a951" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Гарантия на изделия до 5 лет</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="form" id="callback-form" action="{% url 'mebel:main' %}" method="POST" itemscope itemtype="https://schema.org/ContactPage">
+          {% csrf_token %}
+          <meta itemprop="name" content="Форма заказа мебели">
+
+          <div class="form__group">
+
+            {% for error in form.name.errors %}
+              {{ error }}
+            {% endfor %}
+
+            <label class="form__label" for="name">Ваше имя</label>
+            <input class="form__input"
+                   type="text"
+                   id="name"
+                   name="name"
+                   required
+                   itemprop="name"
+                   maxlength="50"
+                   placeholder="Иван Иванов"
+                   pattern="[A-Za-zА-Яа-яЁё\s]{2,50}"
+                   title="Пожалуйста, введите имя (от 2 до 50 символов)"
+                   value="{{ form.name.value|default:'' }}"
+                   aria-describedby="phone-errors"
+                   aria-invalid="{% if form.name.errors %}true{% else %}false{% endif %}">
+          </div>
+
+          <div class="form__group">
+            <div id="phone-errors" role="alert" class="invalid-feedback">
+              {% for error in form.phone.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+
+            <label class="form__label" for="id_phone" >Введите номер телефона</label>
+            <input class="form__input"
+                   type="tel"
+                   name="phone"
+                   id="id_phone"
+                   placeholder="+7 (___) ___-__-__"
+                   required
+                   value="{{ form.phone.value|default:'' }}"
+                   aria-describedby="phone-errors"
+                   aria-invalid="{% if form.phone.errors %}true{% else %}false{% endif %}">
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="category">Интересующая категория</label>
+            <select class="form__select"
+                    id="category"
+                    name="category">
+              <option value="">Выберите категорию</option>
+              {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="message">Комментарий (необязательно)</label>
+            <textarea class="form__textarea"
+                      type="text"
+                      id="message"
+                      name="message"
+                      rows="3"
+                      itemprop="text"
+                      placeholder="Ваши пожелания или вопросы"
+                      value="{{ form.message.value|default:'' }}"></textarea>
+          </div>
+
+          <!-- Honeypot поле (скрытое для пользователей, но видимое для ботов) -->
+          <div style="display: none !important;">
+            <label for="honeypot">Если вы человек, не заполняйте это поле</label>
+            <input
+              type="text"
+              name="website"
+              id="honeypot"
+              autocomplete="off">
+          </div>
+
+          <button class="form__btn" type="submit" itemprop="potentialAction">Отправить заявку</button>
+
+          <p class="form__privacy">
+            Нажимая на кнопку, вы соглашаетесь с
+            <a href="{% url 'mebel:privacy_policy' %}">политикой конфиденциальности privacy_policy</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

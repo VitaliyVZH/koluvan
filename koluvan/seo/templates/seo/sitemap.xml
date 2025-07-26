@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+
+    <!-- Главная страница -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}</loc>
+        <lastmod>{{ date_change_main|date:"c" }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Страница с отзывами -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/reviews/</loc>
+        <lastmod>{{ date_last_review|date:"c" }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Страница политики конфиденциальности -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/privacy_policy/</loc>
+        <lastmod>{{ date_change_privacy_policy|date:"c" }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    {% for category in categories %}
+    	<url>
+            <loc>{{ request.scheme }}://{{ request.get_host }}/{{ category.slug }}/</loc>
+            {% if category.last_image_update %}
+                <lastmod>{{ category.last_modified|date:"c" }}</lastmod>
+            {% endif %}
+            <changefreq>daily</changefreq>
+            <priority>0.7</priority>
+        </url>
+    {% endfor %}
+
+
+</urlset>

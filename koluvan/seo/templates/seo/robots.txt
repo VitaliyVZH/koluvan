@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+Disallow: /?hl=ru-RU
+Disallow: /?etext=..
+Allow: /static/img/favicon.ico
+Allow: /static/img/favicon.png
+
+Sitemap: https://www.kolyvanandco.com/sitemap.xml
+
+User-agent: MJ12bot
+Disallow: /
+User-agent: AhrefsBot
+Disallow: /
+User-agent: Alexibot
+Disallow: /
+User-agent: SurveyBot
+Disallow: /
+User-agent: XenuР
+Disallow: /
+User-agent: SolomonoBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: SemrushBot-SA
+Disallow: /
+User-agent: rogerbot
+Disallow: /
+User-agent: dotbot
+Disallow: /
+User-agent: Blekkobot
+Disallow: /
+
+Host: https://kolyvanandco.com

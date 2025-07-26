@@ -1,0 +1,118 @@
+{% extends 'koluvan/base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+{% endblock %}
+
+{% block title %}{{ category.name }} | Мебель на заказ в Мариуполе{% endblock %}
+
+{% block content %}
+<section class="category-detail">
+  <div class="container">
+
+    {# Хлебные крошки #}
+    <div class="breadcrumbs">
+      <a href="{% url 'mebel:main' %}">Главная</a> &raquo;
+      <span>{{ category.name }}</span>
+    </div>
+
+    <h1 class="category-detail__title">{{ category.name }}</h1>
+
+  <div class="business-solutions">
+    {{ category.description|safe }}
+  </div>
+
+{% if additional_images %}
+<div class="gallery">
+  <h2 class="gallery__title">Примеры наших работ</h2>
+
+  <div class="gallery-grid">
+    {% for image in additional_images %}
+    <div class="gallery-item"
+         onclick="openModal('{{ image.src.url }}', '{{ image.alt }}')"
+         data-category="{{ forloop.counter|divisibleby:2|yesno:'kitchen,wardrobe' }}">
+      <picture>
+        <source srcset="{{ image.thumb_avif.url }}" type="image/avif">
+        <source srcset="{{ image.thumb_webp.url }}" type="image/webp">
+        <img src="{{ image.thumb_jpeg.url }}" alt="{{ image.alt }}">
+      </picture>
+      <div class="gallery-caption">
+        <div class="gallery-title">{{ category.name }}</div>
+        <div class="gallery-description">{{ image.alt }}</div>
+      </div>
+      <div class="gallery-overlay">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#fff" stroke-width="1.5">
+          <path d="M15 12l-3-3-3 3"></path>
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+    <!-- Модальное окно для просмотра изображений -->
+    <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <div class="modal-content">
+        <img id="modalImage" class="modal-image">
+        <div id="modalCaption" class="modal-caption"></div>
+      </div>
+    </div>
+
+    <div class="features">
+      <h2 class="features__title">Наши преимущества</h2>
+      <div class="features__grid">
+        <div class="feature">
+          <img src="{% static 'img/ruler.jpg' %}" alt="Индивидуальный замер" class="feature__icon">
+          <h3 class="feature__title">Индивидуальный замер</h3>
+          <p class="feature__text">Бесплатный выезд замерщика с образцами материалов</p>
+        </div>
+        <div class="feature">
+          <img src="{% static 'img/clock.png' %}" alt="Соблюдение сроков" class="feature__icon">
+          <h3 class="feature__title">Соблюдение сроков</h3>
+          <p class="feature__text">Изготовление точно в оговоренные сроки</p>
+        </div>
+        <div class="feature">
+          <img src="{% static 'img/money.jpg' %}" alt="Гарантия качества" class="feature__icon">
+          <h3 class="feature__title">Решение под ваш бюджет</h3>
+          <p class="feature__text">Создание мебели по оговоренному бюджету</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2 class="cta-section__title">Мы вам перезвоним!</h2>
+      <p class="cta-section__text">Оставьте заявку и получите бесплатную консультацию дизайнера</p>
+      <a href="{% url 'mebel:main' %}#callback-form" class="btn cta-section__btn">Оставить заявку</a>
+    </div>
+  </div>
+</section>
+
+<script>
+    // Функция для открытия модального окна
+    function openModal(imgSrc, caption) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const captionText = document.getElementById('modalCaption');
+
+        modal.style.display = "block";
+        modalImg.src = imgSrc;
+        captionText.innerHTML = caption;
+    }
+
+    // Закрытие модального окна
+    document.querySelector('.close-modal').addEventListener('click', function() {
+        document.getElementById('imageModal').style.display = "none";
+    });
+
+    // Закрытие при клике вне изображения
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('imageModal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+</script>
+{% endblock %}

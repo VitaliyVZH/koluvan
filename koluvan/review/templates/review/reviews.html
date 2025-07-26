@@ -1,0 +1,262 @@
+{% extends 'koluvan/base.html' %}
+{% load static %}
+
+{% block title%}Отзывы о компании Колыван и Ко {% endblock %}
+
+{% block content %}
+  <section class="hero__reviews-page">
+
+    <!-- /Основная микроразметка для страницы с отзывами -->
+{#    {% include 'reviews/microdata/microdata_reviews_list.html' %}#}
+
+    <div class="container">
+      <div class="row">
+        <h1 class="col-12 col-lg-4 reviews-page__hero-title">
+          Оставьте, пожалуйста, отзыв о&nbsp;нашей работе.
+          <span>Мы будем Вам благодарны</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+    <section class="reviews-page">
+      <div class="container">
+
+        {# Хлебные крошки #}
+        <div class="breadcrumbs">
+          <a href="{% url 'mebel:main' %}">Главная</a> &raquo;
+          <span>Отзывы</span>
+        </div>
+
+        <h2 class="reviews-page__title">Отзывы наших пользователей</h2>
+        <ul class="list-reset row reviews-page__list" id="reviews-page__list">
+          <li class="col-12 col-md-6 col-lg-4">
+          </li>
+        </ul>
+
+
+          {% if reviews|length > 4 %}
+          	<div class="flex justify-content-center">
+              <button id="reviews-page__show-more" class="btn reviews-page__show-more">Показать еще</button>
+            </div>
+          {% endif %}
+
+
+        <form class="reviews-page__from" method="post" id="rating-form" action="{% url 'review:review' %}">
+          {% csrf_token %}
+          <h2 class="reviews-page__from-title">Оставьте свой отзыв!</h2>
+          <div class="flex flex-column">
+            <div class="flex flex-column">
+              <label for="reviews-page__from-name">Ваше&nbsp;имя</label>
+              <input name="reviews-page__from-name" class="reviews-page__from-name" id="reviews-page__from-name"
+                required type="text">
+            </div>
+          </div>
+          <div class="rating" id="rating">
+            <span class="star" data-value="5">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="1">★</span>
+          </div>
+
+           <div>
+            <p class="rating-you-choose">Вы выбрали: <span id="selected-rating">0</span> звезд(ы)</p>
+          </div>
+          <input type="hidden" name="rating" id="rating-value" value="0">
+          <textarea required class="reviews-page__from-text-area" placeholder="Напишите свои впечатления" name="text"
+            id="" rows="3"></textarea>
+          <!-- Honeypot поле (скрытое для пользователей, но видимое для ботов) -->
+          <div style="display: none !important;">
+            <label for="honeypot">Если вы человек, не заполняйте это поле</label>
+            <input type="text" name="website" id="honeypot" autocomplete="off">
+          </div>
+          <button class="btn reviews-page__from-btn" type="submit">Отправить отзыв!</button>
+        </form>
+      </div>
+
+    </section>
+      <div id="reviews-page__modal" class="hidden reviews-page__modal">
+        <div class="reviews-page__modal-container">
+          <p>Спасибо за Ваш отзыв!
+          После проверки модератором отзыв будет опубликован.</p>
+        </div>
+      </div>
+
+    <!-- Передаем реальные данные из Django в JavaScript -->
+    <script>
+      // Получаем данные из контекста шаблона
+      const serverReviewsData = {{ reviews_json|safe }};
+
+      // Преобразуем данные для использования в скрипте
+      const serverReviews = serverReviewsData.map(review => {
+        return {
+          name: review.name,
+          content: review.content,
+          rating: review.rating,
+          date: new Date(review.date)  // Преобразуем строку в Date
+        };
+      });
+    </script>
+
+    <script>
+      // Количество показываемых элементов
+      const howManyElementsShowed = 4
+
+      // Количество показываемых элементов по кнопке
+      const howManyElementsShowNext = 4
+
+      let counter = 0
+
+      document.addEventListener('DOMContentLoaded', () => {
+
+        const stars = document.querySelectorAll('.star');
+        const ratingDisplay = document.getElementById('selected-rating');
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+          star.addEventListener('click', () => {
+            selectedRating = parseInt(star.getAttribute('data-value'));
+            updateRating(selectedRating);
+          });
+
+          star.addEventListener('mouseover', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            highlightStars(value);
+          });
+
+          star.addEventListener('mouseout', () => {
+            highlightStars(selectedRating);
+          });
+        });
+
+        function highlightStars(value) {
+          stars.forEach(s => {
+            const starValue = parseInt(s.getAttribute('data-value'));
+            if (starValue <= value) {
+              s.classList.add('r-active');
+            } else {
+              s.classList.remove('r-active');
+            }
+          });
+        }
+
+        function updateRating(rating) {
+          ratingDisplay.textContent = rating;
+          highlightStars(rating);
+
+          // Вот тут данные, сколько звёзд поставили, чтобы потом отправить на сервер
+          document.getElementById('rating-value').value = rating;
+        }
+
+        // Функция перевода объекта дата в строку (обновленная)
+        function DateStringer(date) {
+          // Если пришла строка - преобразуем в Date
+          if (typeof date === 'string') {
+            date = new Date(date);
+          }
+          return `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`
+        }
+
+        // Функция для отображения звезд рейтинга
+        function renderRatingStars(rating) {
+          let starsHtml = '';
+          for (let i = 1; i <= 5; i++) {
+            starsHtml += `<span class="reviews-page__star ${i <= rating ? 'filled' : ''}">★</span>`;
+          }
+          return starsHtml;
+        }
+
+        // Объявляем переменные для формы и модального окна
+        const form = document.querySelector('#rating-form');
+        const modal = document.getElementById('reviews-page__modal');
+
+        // Новый обработчик формы с AJAX
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          if (selectedRating === 0) {
+            alert('Пожалуйста, выберите количество звезд');
+            return;
+          }
+
+          // Собираем данные формы
+          const formData = new FormData(form);
+
+          try {
+            // Отправляем данные через AJAX
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest' // Важно для Django
+              }
+            });
+
+            if (response.ok) {
+              // Показываем модальное окно
+              modal.classList.remove('hidden');
+
+              // Очищаем форму
+              form.reset();
+              selectedRating = 0;
+              updateRating(0);
+
+              // Скрываем модальное окно через 3 секунды
+              setTimeout(() => {
+                modal.classList.add('hidden');
+              }, 3000);
+            } else {
+              alert('Ошибка при отправке отзыва');
+            }
+          } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при отправке');
+          }
+        });
+
+        // Функция отображения отзывов
+        function displayReviews(reviews) {
+          const container = document.getElementById('reviews-page__list');
+
+          // Очищаем контейнер перед добавлением новых отзывов
+          container.innerHTML = '';
+
+          reviews.forEach(review => {
+            const reviewElementLi = document.createElement('li');
+            reviewElementLi.className = 'col-12 col-md-6 col-lg-4 col-xl-3 flex';
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'reviews-page__container';
+            reviewElement.innerHTML = `
+                        <h3 class="reviews-page__name">${review.name}</h3>
+                        <div class="reviews-page__rating">
+                          ${renderRatingStars(review.rating)}
+                        </div>
+                        <p class="reviews-page__text">${review.content}</p>
+                        <span class="reviews-page__date">${DateStringer(review.date)}</span>
+                    `;
+            reviewElementLi.appendChild(reviewElement)
+            container.appendChild(reviewElementLi);
+          });
+        }
+
+        // Отображаем реальные данные из Django
+        let list = 0
+        displayReviews(serverReviews.slice(0, howManyElementsShowed))
+
+        // Механизм показа следующих записей
+        const btnShow = document.querySelector('#reviews-page__show-more')
+        if (btnShow) {
+          btnShow.addEventListener('click', () => {
+            list += howManyElementsShowNext
+            displayReviews(serverReviews.slice(0, howManyElementsShowed + list))
+
+            // Скрываем кнопку, если показали все отзывы
+            if (serverReviews.length <= howManyElementsShowed + list) {
+              btnShow.remove()
+            }
+          });
+        }
+      });
+    </script>
+
+{% endblock %}

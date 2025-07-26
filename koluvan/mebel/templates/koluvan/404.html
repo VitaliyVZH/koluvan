@@ -1,0 +1,13 @@
+{% extends 'koluvan/base.html' %}
+
+{% block content %}
+    <main class="main">
+      <section class="error-404">
+        <div class="container">
+            <h1>404</h1>
+            <p>Страница не найдена</p>
+            <a href="{% url 'mebel:main' %}" class="error-404__link btn">Вернуться на главную</a>
+        </div>
+      </section>
+    </main>
+{% endblock %}
